@@ -3,6 +3,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../widgets/progress_bar.dart';
+
 import '../main.dart';
 import './main_screen.dart';
 import './signin_screen.dart';
@@ -122,13 +124,22 @@ class LoginScreen extends StatelessWidget {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   void loginAndAuthenticateUser(BuildContext context) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const ProgressDialog(
+              message: "Authenticating, Please Wait...");
+        });
     final firebaseUser = (await _firebaseAuth
             .signInWithEmailAndPassword(
-              email: _emailController.text,
-              password: _passwordController.text,
-            )
-            .catchError((error) =>
-                displayToastMessage("Error:" + error.toString(), context)))
+      email: _emailController.text,
+      password: _passwordController.text,
+    )
+            .catchError((error) {
+      Navigator.of(context).pop();
+      displayToastMessage("Error:" + error.toString(), context);
+    }))
         .user;
     if (firebaseUser != null) {
       usersRef.child(firebaseUser.uid).once().then((DataSnapshot snap) {
@@ -137,11 +148,13 @@ class LoginScreen extends StatelessWidget {
               .pushNamedAndRemoveUntil(MainScreen.routeName, (route) => false);
           displayToastMessage("User loged In", context);
         } else {
+          Navigator.of(context).pop();
           _firebaseAuth.signOut();
           displayToastMessage("Usr recordes Does  not exist", context);
         }
       });
     } else {
+      Navigator.of(context).pop();
       displayToastMessage("Error occured, Can't log In", context);
     }
   }

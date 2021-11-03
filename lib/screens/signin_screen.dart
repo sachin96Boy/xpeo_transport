@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uber_clone/widgets/progress_bar.dart';
 
 import '../main.dart';
 import './login_screen.dart';
@@ -161,13 +162,21 @@ class SigninScreen extends StatelessWidget {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   void registerNewUser(BuildContext context) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const ProgressDialog(message: "Registering, Please Wait...");
+        });
     final firebaseUser = (await _firebaseAuth
             .createUserWithEmailAndPassword(
-              email: _emailController.text,
-              password: _passwordController.text,
-            )
-            .catchError((error) =>
-                displayToastMessage("Error:" + error.toString(), context)))
+      email: _emailController.text,
+      password: _passwordController.text,
+    )
+            .catchError((error) {
+      Navigator.of(context).pop();
+      displayToastMessage("Error:" + error.toString(), context);
+    }))
         .user;
     if (firebaseUser != null) {
       Map _userData = {
@@ -181,8 +190,9 @@ class SigninScreen extends StatelessWidget {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(MainScreen.routeName, (route) => false);
     } else {
+      Navigator.of(context).pop();
       displayToastMessage("New User Account has not been created ", context);
-    } 
+    }
   }
 }
 
