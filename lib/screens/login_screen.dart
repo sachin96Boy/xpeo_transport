@@ -6,6 +6,9 @@ class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
   static const routeName = "/login";
 
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +43,7 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 1.0),
                     TextFormField(
+                      controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
                         labelText: "Email",
@@ -53,6 +57,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 1.0),
                     TextFormField(
+                      controller: _passwordController,
                       obscureText: true,
                       decoration: const InputDecoration(
                         labelText: "Password",

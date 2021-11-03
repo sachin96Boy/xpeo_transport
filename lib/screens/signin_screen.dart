@@ -1,10 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uber_clone/main.dart';
 import 'package:uber_clone/screens/login_screen.dart';
+import 'package:uber_clone/screens/main_screen.dart';
 
 class SigninScreen extends StatelessWidget {
-  const SigninScreen({Key? key}) : super(key: key);
+  SigninScreen({Key? key}) : super(key: key);
   static const routeName = "/signin";
+
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +50,7 @@ class SigninScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 1.0),
                     TextFormField(
+                      controller: _nameController,
                       keyboardType: TextInputType.text,
                       decoration: const InputDecoration(
                         labelText: "Name",
@@ -53,6 +64,7 @@ class SigninScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 1.0),
                     TextFormField(
+                      controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
                         labelText: "email",
@@ -67,6 +79,7 @@ class SigninScreen extends StatelessWidget {
                     const SizedBox(height: 1.0),
                     const SizedBox(height: 1.0),
                     TextFormField(
+                      controller: _phoneController,
                       keyboardType: TextInputType.phone,
                       decoration: const InputDecoration(
                         labelText: "Phone Number",
@@ -79,6 +92,7 @@ class SigninScreen extends StatelessWidget {
                       style: const TextStyle(fontSize: 14.0),
                     ),
                     TextFormField(
+                      controller: _passwordController,
                       obscureText: true,
                       decoration: const InputDecoration(
                         labelText: "Password",
@@ -92,7 +106,24 @@ class SigninScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10.0),
                     ElevatedButton(
-                      onPressed: () => {print("button clicked")},
+                      onPressed: () {
+                        if (_nameController.text.length < 3) {
+                          displayToastMessage(
+                              "name must be atleast 5 characters long",
+                              context);
+                        } else if (!_emailController.text.contains("@")) {
+                          displayToastMessage(
+                              "email address not valid", context);
+                        } else if (_phoneController.text.isEmpty) {
+                          displayToastMessage(
+                              "phone number can't be empty", context);
+                        } else if (_passwordController.text.length < 6) {
+                          displayToastMessage(
+                              "password length should be greater than 7",
+                              context);
+                        }
+                        registerNewUser(context);
+                      },
                       child: Container(
                         height: 50.0,
                         child: Center(
@@ -115,7 +146,7 @@ class SigninScreen extends StatelessWidget {
                 ),
               ),
               TextButton(
-                child: Text("Sign in insted"),
+                child: const Text("Sign in insted"),
                 onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                     LoginScreen.routeName, (route) => false),
                 style: TextButton.styleFrom(primary: Colors.black),
@@ -126,4 +157,35 @@ class SigninScreen extends StatelessWidget {
       ),
     );
   }
+
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  void registerNewUser(BuildContext context) async {
+    final firebaseUser = (await _firebaseAuth
+            .createUserWithEmailAndPassword(
+              email: _emailController.text,
+              password: _passwordController.text,
+            )
+            .catchError((error) =>
+                displayToastMessage("Error:" + error.toString(), context)))
+        .user;
+    if (firebaseUser != null) {
+      Map _userData = {
+        "name": _nameController.text.trim(),
+        "email": _emailController.text.trim(),
+        "phone": _phoneController.text.trim(),
+      };
+      usersRef.child(firebaseUser.uid).set(_userData);
+      displayToastMessage("Account created", context);
+
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(MainScreen.routeName, (route) => false);
+    } else {
+      displayToastMessage("New User Account has not been created ", context);
+    }
+  }
+}
+
+displayToastMessage(String message, BuildContext context) {
+  Fluttertoast.showToast(msg: message);
 }
