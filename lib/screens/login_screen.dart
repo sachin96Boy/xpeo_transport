@@ -1,9 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uber_clone/screens/signin_screen.dart';
+
+import '../main.dart';
+import './main_screen.dart';
+import './signin_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
   static const routeName = "/login";
 
   final _emailController = TextEditingController();
@@ -71,7 +76,16 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10.0),
                     ElevatedButton(
-                      onPressed: () => {print("button clicked")},
+                      onPressed: () {
+                        if (!_emailController.text.contains("@")) {
+                          displayToastMessage(
+                              "email address not valid", context);
+                        } else if (_passwordController.text.isEmpty) {
+                          displayToastMessage("password required", context);
+                        } else {
+                          loginAndAuthenticateUser(context);
+                        }
+                      },
                       child: Container(
                         height: 50.0,
                         child: Center(
@@ -94,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               TextButton(
-                child: Text("Sign Up insted"),
+                child: const Text("Sign Up insted"),
                 onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                     SigninScreen.routeName, (route) => false),
                 style: TextButton.styleFrom(primary: Colors.black),
@@ -104,5 +118,31 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  void loginAndAuthenticateUser(BuildContext context) async {
+    final firebaseUser = (await _firebaseAuth
+            .signInWithEmailAndPassword(
+              email: _emailController.text,
+              password: _passwordController.text,
+            )
+            .catchError((error) =>
+                displayToastMessage("Error:" + error.toString(), context)))
+        .user;
+    if (firebaseUser != null) {
+      usersRef.child(firebaseUser.uid).once().then((DataSnapshot snap) {
+        if (snap.value != null) {
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(MainScreen.routeName, (route) => false);
+          displayToastMessage("User loged In", context);
+        } else {
+          _firebaseAuth.signOut();
+          displayToastMessage("Usr recordes Does  not exist", context);
+        }
+      });
+    } else {
+      displayToastMessage("Error occured, Can't log In", context);
+    }
   }
 }

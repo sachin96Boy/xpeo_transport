@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uber_clone/main.dart';
-import 'package:uber_clone/screens/login_screen.dart';
-import 'package:uber_clone/screens/main_screen.dart';
+
+import '../main.dart';
+import './login_screen.dart';
+import './main_screen.dart';
 
 class SigninScreen extends StatelessWidget {
   SigninScreen({Key? key}) : super(key: key);
@@ -182,7 +182,7 @@ class SigninScreen extends StatelessWidget {
           .pushNamedAndRemoveUntil(MainScreen.routeName, (route) => false);
     } else {
       displayToastMessage("New User Account has not been created ", context);
-    }
+    } 
   }
 }
 

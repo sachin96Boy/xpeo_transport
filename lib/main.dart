@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:uber_clone/screens/main_screen.dart';
 
+import './screens/main_screen.dart';
 import './screens/signin_screen.dart';
 import './screens/login_screen.dart';
 // import './screens/main_screen.dart';
@@ -27,10 +27,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginScreen(),
+      home: LoginScreen(),
       routes: {
         SigninScreen.routeName: (context) => SigninScreen(),
-        LoginScreen.routeName: (context) => const LoginScreen(),
+        LoginScreen.routeName: (context) => LoginScreen(),
         MainScreen.routeName: (context) => const MainScreen(),
       },
       debugShowCheckedModeBanner: false,
