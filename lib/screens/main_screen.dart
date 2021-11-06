@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../widgets/app_drawer.dart';
 import './/widgets/divider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -35,6 +36,7 @@ class _MainScreenState extends State<MainScreen> {
           style: GoogleFonts.roboto(),
         ),
       ),
+      drawer: const AppDrawer(),
       body: Stack(
         children: [
           GoogleMap(
