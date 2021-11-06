@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "384698909903",
+    "firebase_url": "https://xpeo-transport-default-rtdb.firebaseio.com",
+    "project_id": "xpeo-transport",
+    "storage_bucket": "xpeo-transport.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:384698909903:android:8bbfdb2d01d39d28e563ba",
+        "android_client_info": {
+          "package_name": "com.sachin.xpeotransportflutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "384698909903-pgcl7bhdl8h6sis8r11g4i46loao5ufq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnLZFxDMCUPVJRZALGNmPK88D9t4HtObY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "384698909903-pgcl7bhdl8h6sis8r11g4i46loao5ufq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
