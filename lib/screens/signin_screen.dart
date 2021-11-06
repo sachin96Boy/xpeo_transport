@@ -125,7 +125,7 @@ class SigninScreen extends StatelessWidget {
                         }
                         registerNewUser(context);
                       },
-                      child: Container(
+                      child: SizedBox(
                         height: 50.0,
                         child: Center(
                           child: Text(

@@ -14,7 +14,7 @@ class AppDrawer extends StatelessWidget {
       child: Drawer(
         child: ListView(
           children: [
-            Container(
+            SizedBox(
               height: 150.0,
               child: DrawerHeader(
                 decoration: const BoxDecoration(color: Colors.white),

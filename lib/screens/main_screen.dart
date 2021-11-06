@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../widgets/app_drawer.dart';
-import './/widgets/divider.dart';
+import '../widgets/divider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -19,8 +20,34 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final Completer<GoogleMapController> _controllerGoogleMap = Completer();
-
   late GoogleMapController newGoogleMapController;
+
+  late Position _currentPosition;
+  var geoLocator = Geolocator();
+
+  double bottomPaddingOfMap = 0;
+
+  void locatePosition() async {
+    try {
+      _currentPosition = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+
+      LatLng latLatposition = LatLng(
+        _currentPosition.latitude,
+        _currentPosition.longitude,
+      );
+
+      CameraPosition _camerposition = CameraPosition(
+        target: latLatposition,
+        zoom: 15,
+      );
+      newGoogleMapController.animateCamera(
+        CameraUpdate.newCameraPosition(_camerposition),
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -40,12 +67,22 @@ class _MainScreenState extends State<MainScreen> {
       body: Stack(
         children: [
           GoogleMap(
+            padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
             mapType: MapType.normal,
             myLocationButtonEnabled: true,
             initialCameraPosition: _kGooglePlex,
+            myLocationEnabled: true,
+            zoomGesturesEnabled: true,
+            zoomControlsEnabled: true,
             onMapCreated: (GoogleMapController controller) {
               _controllerGoogleMap.complete(controller);
               newGoogleMapController = controller;
+
+              setState(() {
+                bottomPaddingOfMap = 320;
+              });
+
+              locatePosition();
             },
           ),
           Positioned(
