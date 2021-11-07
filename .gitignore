@@ -47,3 +47,9 @@ app.*.map.json
 android/app/google-services .json
 android/app/google-services.json
 .env
+
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+.packages
+generated_plugin_registrant.dart

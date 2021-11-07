@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:uber_clone/provider/providers.dart';
 
 import '../widgets/app_drawer.dart';
 import '../widgets/divider.dart';
@@ -44,6 +45,8 @@ class _MainScreenState extends State<MainScreen> {
       newGoogleMapController.animateCamera(
         CameraUpdate.newCameraPosition(_camerposition),
       );
+      String address = await Providers.searchCordinateAddress(_currentPosition);
+      print(address);
     } catch (e) {
       print(e);
     }
