@@ -1,13 +1,14 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:uber_clone/provider/providers.dart';
+import 'package:provider/provider.dart';
+import '../provider/userprovider.dart';
 
+import '../locator/locator.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/divider.dart';
 
@@ -45,7 +46,8 @@ class _MainScreenState extends State<MainScreen> {
       newGoogleMapController.animateCamera(
         CameraUpdate.newCameraPosition(_camerposition),
       );
-      String address = await Providers.searchCordinateAddress(_currentPosition);
+      String address =
+          await NewLocator().searchCordinateAddress(_currentPosition, context);
       print(address);
     } catch (e) {
       print(e);
@@ -190,7 +192,13 @@ class _MainScreenState extends State<MainScreen> {
                         Column(
                           children: [
                             Text(
-                              "Home",
+                              Provider.of<UserProvider>(context)
+                                          .pickupLocation !=
+                                      null
+                                  ? Provider.of<UserProvider>(context)
+                                      .pickupLocation
+                                      .placeName
+                                  : "Add Home",
                               style: GoogleFonts.poppins(
                                 textStyle: const TextStyle(
                                   fontSize: 14.0,

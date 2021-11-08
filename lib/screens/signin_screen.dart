@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uber_clone/widgets/progress_bar.dart';
+
+import '../widgets/progress_bar.dart';
 
 import '../main.dart';
 import './login_screen.dart';

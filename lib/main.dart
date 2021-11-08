@@ -2,11 +2,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
+
+import './provider/userprovider.dart';
 
 import './screens/main_screen.dart';
 import './screens/signin_screen.dart';
 import './screens/login_screen.dart';
-// import './screens/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,18 +26,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Expo-Transport',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: MaterialApp(
+        title: 'Expo-Transport',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MainScreen(),
+        routes: {
+          SigninScreen.routeName: (context) => SigninScreen(),
+          LoginScreen.routeName: (context) => LoginScreen(),
+          MainScreen.routeName: (context) => const MainScreen(),
+        },
+        debugShowCheckedModeBanner: false,
       ),
-      home: const MainScreen(),
-      routes: {
-        SigninScreen.routeName: (context) => SigninScreen(),
-        LoginScreen.routeName: (context) => LoginScreen(),
-        MainScreen.routeName: (context) => const MainScreen(),
-      },
-      debugShowCheckedModeBanner: false,
     );
   }
 }
