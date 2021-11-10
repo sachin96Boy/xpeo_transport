@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:uber_clone/models/address.dart';
+import 'package:uber_clone/screens/search_screen.dart';
 
 import './provider/userprovider.dart';
 
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
           SigninScreen.routeName: (context) => SigninScreen(),
           LoginScreen.routeName: (context) => LoginScreen(),
           MainScreen.routeName: (context) => const MainScreen(),
+          SearchScreen.routeName: (context) => const SearchScreen(),
         },
         debugShowCheckedModeBanner: false,
       ),

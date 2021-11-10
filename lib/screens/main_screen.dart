@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:uber_clone/screens/search_screen.dart';
 import '../provider/userprovider.dart';
 
 import '../locator/locator.dart';
@@ -140,39 +141,43 @@ class _MainScreenState extends State<MainScreen> {
                     const SizedBox(
                       height: 10.0,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5.0),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black54,
-                            blurRadius: 6.0,
-                            spreadRadius: 0.5,
-                            offset: Offset(0.7, 0.7),
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const FaIcon(
-                              FontAwesomeIcons.search,
-                              color: Colors.grey,
+                    GestureDetector(
+                      onTap: () => Navigator.of(context)
+                          .pushNamed(SearchScreen.routeName),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5.0),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 6.0,
+                              spreadRadius: 0.5,
+                              offset: Offset(0.7, 0.7),
                             ),
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                            Text("Search Drop off Location",
-                                style: GoogleFonts.poppins(
-                                  textStyle: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ))
                           ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const FaIcon(
+                                FontAwesomeIcons.search,
+                                color: Colors.grey,
+                              ),
+                              const SizedBox(
+                                width: 10.0,
+                              ),
+                              Text("Search Drop off Location",
+                                  style: GoogleFonts.poppins(
+                                    textStyle: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ))
+                            ],
+                          ),
                         ),
                       ),
                     ),
