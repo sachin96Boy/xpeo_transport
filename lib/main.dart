@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:uber_clone/models/address.dart';
 
 import './provider/userprovider.dart';
 
@@ -27,7 +28,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => UserProvider(),
+      create: (context) => UserProvider(
+        Address(
+            placeFormattedAddress: "",
+            placeName: "",
+            placeId: "",
+            latitude: 0.0,
+            longitude: 0.0),
+      ),
       child: MaterialApp(
         title: 'Expo-Transport',
         theme: ThemeData(
