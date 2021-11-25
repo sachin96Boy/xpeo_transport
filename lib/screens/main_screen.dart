@@ -6,7 +6,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:uber_clone/screens/search_screen.dart';
+
+import '../screens/search_screen.dart';
 import '../provider/userprovider.dart';
 
 import '../locator/locator.dart';
@@ -22,6 +23,21 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  var _isLoaing = false;
+  var _isInit = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
   final Completer<GoogleMapController> _controllerGoogleMap = Completer();
   late GoogleMapController newGoogleMapController;
 
@@ -198,12 +214,8 @@ class _MainScreenState extends State<MainScreen> {
                           children: [
                             Text(
                               Provider.of<UserProvider>(context)
-                                          .pickupLocation !=
-                                      null
-                                  ? Provider.of<UserProvider>(context)
-                                      .pickupLocation
-                                      .placeName
-                                  : "Add Home",
+                                  .pickupLocation
+                                  .placeName,
                               style: GoogleFonts.poppins(
                                 textStyle: const TextStyle(
                                   fontSize: 14.0,

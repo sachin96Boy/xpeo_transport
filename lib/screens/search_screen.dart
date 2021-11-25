@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:uber_clone/locator/add_request.dart';
+import 'package:uber_clone/provider/userprovider.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -12,11 +16,14 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-
-  
+  final pickUpTextEditingController = TextEditingController();
+  final dropOfftextEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    String placeAddress =
+        Provider.of<UserProvider>(context).pickupLocation.placeName;
+    pickUpTextEditingController.text = placeAddress;
     return Scaffold(
       body: Column(
         children: [
@@ -89,6 +96,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(3.0),
                             child: TextField(
+                              controller: pickUpTextEditingController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 fillColor: Colors.grey[200],
@@ -134,6 +142,8 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(3.0),
                             child: TextField(
+                              controller: dropOfftextEditingController,
+                              onChanged: (value) => findPlace(value),
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 fillColor: Colors.grey[200],
@@ -164,5 +174,21 @@ class _SearchScreenState extends State<SearchScreen> {
         ],
       ),
     );
+  }
+
+  void findPlace(String placeName) async {
+    if (placeName.length > 1) {
+      String url =
+          "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$placeName&key=${dotenv.env['GOOGLE_MAPS_API_KEY']}&components=country:lk";
+
+      var response = await Request.getRequest(url);
+
+      if (response == "faild") {
+        return;
+      }
+
+      print("place prediction response: ");
+      print(response);
+    }
   }
 }

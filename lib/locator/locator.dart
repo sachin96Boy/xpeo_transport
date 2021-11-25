@@ -35,7 +35,7 @@ class NewLocator {
           longitude: position.longitude,
           placeName: placeAddress);
 
-      Provider.of<UserProvider>(context, listen: false)
+      Provider.of<UserProvider>(context)
           .updatePickupLocationAddress(userPickupAddress);
     }
     return placeAddress;
