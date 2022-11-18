@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:uber_clone/models/address.dart';
+
+import '../models/address.dart';
 
 class UserProvider extends ChangeNotifier {
   Address pickupLocation;

@@ -1,13 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:provider/provider.dart';
-import 'package:uber_clone/models/address.dart';
-import 'package:uber_clone/screens/search_screen.dart';
 
+import './models/address.dart';
 import './provider/userprovider.dart';
 
+import './screens/search_screen.dart';
 import './screens/main_screen.dart';
 import './screens/signin_screen.dart';
 import './screens/login_screen.dart';
