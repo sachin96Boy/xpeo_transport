@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -38,7 +37,7 @@ class LoginScreen extends StatelessWidget {
               Text(
                 "Rider Login",
                 style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.headline5,
+                    textStyle: Theme.of(context).textTheme.headlineSmall,
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
@@ -101,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.yellow,
+                        backgroundColor: Colors.yellow,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24.0)),
                       ),
@@ -113,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                 child: const Text("Sign Up insted"),
                 onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                     SigninScreen.routeName, (route) => false),
-                style: TextButton.styleFrom(primary: Colors.black),
+                style: TextButton.styleFrom(foregroundColor: Colors.black),
               ),
             ],
           ),
@@ -139,6 +138,7 @@ class LoginScreen extends StatelessWidget {
             .catchError((error) {
       Navigator.of(context).pop();
       displayToastMessage("Error:" + error.toString(), context);
+      return error;
     }))
         .user;
     if (firebaseUser != null) {

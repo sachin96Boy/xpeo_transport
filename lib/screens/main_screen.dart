@@ -179,7 +179,7 @@ class _MainScreenState extends State<MainScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const FaIcon(
-                                FontAwesomeIcons.search,
+                                FontAwesomeIcons.magnifyingGlass,
                                 color: Colors.grey,
                               ),
                               const SizedBox(
@@ -204,7 +204,7 @@ class _MainScreenState extends State<MainScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const FaIcon(
-                          FontAwesomeIcons.home,
+                          FontAwesomeIcons.house,
                           color: Colors.grey,
                         ),
                         const SizedBox(

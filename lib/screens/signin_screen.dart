@@ -40,7 +40,7 @@ class SigninScreen extends StatelessWidget {
               Text(
                 "Register as a Rider",
                 style: GoogleFonts.roboto(
-                    textStyle: Theme.of(context).textTheme.headline5,
+                    textStyle: Theme.of(context).textTheme.headlineSmall,
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
@@ -139,7 +139,7 @@ class SigninScreen extends StatelessWidget {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.blue[400],
+                        backgroundColor: Colors.blue[400],
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24.0)),
                       ),
